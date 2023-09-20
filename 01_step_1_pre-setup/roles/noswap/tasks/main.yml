@@ -1,0 +1,18 @@
+---
+
+- name: do facts module to get latest information
+  setup:
+
+- name: Remove swap from /etc/fstab
+  lineinfile:
+    dest: /etc/fstab
+    regexp: "swap"
+    state: absent
+
+- name: Disable swap
+  command: swapoff --all
+  when: ansible_swaptotal_mb > 0
+
+- name: do facts module to get latest information
+  setup:
+

@@ -1,0 +1,6 @@
+icadmin010.iccluster.epfl.ch gpu=None cpu_worker=false gpu_worker=false type=None
+iccluster027.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3
+iccluster031.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3
+iccluster041.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3
+
+

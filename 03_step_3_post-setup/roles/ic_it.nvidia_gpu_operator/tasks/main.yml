@@ -1,0 +1,49 @@
+---
+- name: Ensure that jq is installed
+  ansible.builtin.package:
+    name: jq
+    state: present
+
+- name: Get the Node Feature Discovery's (NFD) installation status
+  ansible.builtin.shell: |
+    kubectl get nodes -o json | jq '.items[].metadata.labels | keys | any(startswith("feature.node.kubernetes.io"))'
+  register: nfd_installed
+  changed_when: false
+  when: master_node | bool
+
+- name: Set the fact that NFD is installed
+  set_fact:
+    nfd_installed: "{{ nfd_installed.stdout is search('true') }}"
+  when: master_node | bool
+
+- name: Get of GPU-Operator helm chart
+  ansible.builtin.shell: |
+    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh
+  when: not nfd_installed
+
+- name: Install the NVIDIA GPU Operator Helm chart
+  kubernetes.core.helm:
+    name: nvidia-gpu-operator
+    chart_repo_url: https://nvidia.github.io/gpu-operator
+    chart_ref: gpu-operator
+    state: present
+    wait: yes
+    update_repo_cache: yes
+    release_namespace: gpu-operator
+    create_namespace: yes
+    values:
+      driver.enabled: false
+      toolkit.enabled: false
+  when: not nfd_installed
+  run_once: true
+
+- name: Copy file config.toml
+  when: gpu
+  ansible.builtin.copy:
+    src: files/config.toml
+    dest: /etc/containerd/config.toml
+    backup: true
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart containerd

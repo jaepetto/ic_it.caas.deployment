@@ -1,0 +1,6 @@
+---
+  - name: nvidia.nvidia_driver
+  - src: https://github.com/EPFL-IC/ic_it.deploy_ic_it_ssh_keys.git
+    scm: git
+    version: main
+    name: deploy_ic_it_ssh_keys

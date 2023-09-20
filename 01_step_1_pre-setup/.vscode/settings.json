@@ -1,0 +1,6 @@
+{
+  "ansible.python.interpreterPath": "/Users/jaep/code/ic/ic-cluster/ic_it.caas.deployment/01_step_1_pre-setup/venv/bin/python",
+  "ansible.ansible.path": "/Users/jaep/code/ic/ic-cluster/ic_it.caas.deployment/01_step_1_pre-setup/venv/bin/ansible",
+  "ansible.ansibleNavigator.path": "/Users/jaep/code/ic/ic-cluster/ic_it.caas.deployment/01_step_1_pre-setup/venv/bin/ansible-navigator",
+  "ansible.validation.lint.path": "/Users/jaep/code/ic/ic-cluster/ic_it.caas.deployment/01_step_1_pre-setup/venv/bin/ansible-lint"
+}

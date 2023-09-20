@@ -1,0 +1,16 @@
+---
+
+- stat: path=/usr/lib/loginsight-agent/bin/liagent
+  register: liagent
+
+- name: Syslog | Copy package
+  copy:
+    src: files/vmware-log-insight-agent_4.5.0-5626690_all_128.178.131.47.deb
+    dest: /tmp/vmware-log-insight-agent_4.5.0-5626690_all_128.178.131.47.deb
+  when: not liagent.stat.exists
+
+- name: Syslog | Install package
+  apt:
+    deb: /tmp/vmware-log-insight-agent_4.5.0-5626690_all_128.178.131.47.deb
+  when: not liagent.stat.exists
+

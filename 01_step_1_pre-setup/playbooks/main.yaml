@@ -1,0 +1,114 @@
+---
+- name: 'Run the tasks prior to use Kubespray'
+  hosts: all
+  serial: 40
+  gather_facts: true
+  tasks:
+    - name: Install base packages
+      become: true
+      ansible.builtin.apt:
+        name: '{{ item }}'
+        state: present
+        update_cache: true
+      with_items:
+        - apt-transport-https
+        - bikeshed
+        - bmon
+        - byobu
+        - ca-certificates
+        - curl
+        - dstat
+        - gdisk
+        - git
+        - htop
+        - iftop
+        - jq
+        - lnav
+        - mc
+        - ncdu
+        - nfs-common
+        - nmap
+        - nvme-cli
+        - parted
+        - screen
+        - tmux
+        - smartmontools
+        - software-properties-common
+        - vim
+        - vim-scripts
+        - wget
+
+    - name: Deploy kexex
+      ansible.builtin.include_role:
+        name: deploy_kexec
+
+    - name: Configure the IC-IT SSH keys
+      ansible.builtin.include_role:
+        name: deploy_ic_it_ssh_keys
+
+    - name: Configure netplan
+      ansible.builtin.include_role:
+        name: configure_netplan
+
+    - name: Check grub configuration to ensure NVMe and GPU detection at boot
+      ansible.builtin.include_role:
+        name: fix_grub_cmdline_linux_default_option
+
+    - name: Mount the containerd dedicated volume
+      ansible.builtin.include_role:
+        name: mount_containerd_volume
+      when: containerd_dedicated_disk.find('/dev') != -1
+
+    - name: Deploy the VMWare Log Insight agent
+      ansible.builtin.include_role:
+        name: logsmgr
+
+    - name: Disable the swap
+      ansible.builtin.include_role:
+        name: noswap
+
+    - name: 'Deal with NVIDIA drivers and packages'
+      when: gpu is regex('^nvidia.*')
+      tags: nvidia_drivers
+      block:
+        - name: Install the NVIDIA driver
+          ansible.builtin.include_role:
+            name: nvidia.nvidia_driver
+            apply:
+              tags: nvidia_drivers
+          vars:
+            nvidia_driver_skip_reboot: true
+            nvidia_driver_ubuntu_install_from_cuda_repo: true
+            nvidia_driver_branch: '525'
+            nvidia_driver_ubuntu_cuda_package: 'cuda-drivers-525'
+
+        - name: Only on machines with nvidia-a100
+          when: gpu is regex('^nvidia-a100.*')
+          block:
+            - name: Install the nvidia fabric manager and datacenter gpu manager
+              ansible.builtin.apt:
+                name: '{{ item }}'
+                state: present
+                update_cache: true
+              with_items:
+                - nvidia-fabricmanager-525
+                - datacenter-gpu-manager
+
+            - name: Enable and start the dcgm service
+              ansible.builtin.service:
+                name: "{{ item }}"
+                enabled: true
+                state: started
+              with_items:
+                - nvidia-dcgm
+                - nvidia-fabricmanager
+              tags: nvidia-a100-services
+
+        - name: Reboot the machine
+          ansible.builtin.reboot:
+
+        - name: NVIDIA additional packages
+          ansible.builtin.include_role:
+            name: nvidia.packages
+            apply:
+              tags: nvidia_drivers

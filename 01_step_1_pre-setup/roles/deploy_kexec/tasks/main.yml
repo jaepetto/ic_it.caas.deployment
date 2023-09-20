@@ -1,0 +1,16 @@
+- name: 'Make sure that the debconf-utils package is installed'
+  ansible.builtin.apt:
+    name: debconf-utils
+    state: present
+
+- name: 'Pre-populate the answers for the kexec-tools package'
+  ansible.builtin.shell:
+    cmd: "echo '{{ item }}' | debconf-set-selections"
+  with_items:
+    - 'kexec-tools kexec-tools/load_kexec boolean false'
+    - 'kexec-tools     kexec-tools/use_grub_config     boolean false'
+
+- name: 'Install the kexec-tools package'
+  ansible.builtin.apt:
+    name: kexec-tools
+    state: present

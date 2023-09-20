@@ -1,0 +1,39 @@
+---
+- name: nvidia-container-toolkit | apt key
+  ansible.builtin.apt_key:
+    url: https://nvidia.github.io/nvidia-docker/gpgkey
+    state: present
+
+- name: nvidia-container-toolkit | apt repo
+  ansible.builtin.apt_repository:
+    repo: "deb https://nvidia.github.io/libnvidia-container/stable/ubuntu18.04/amd64 /"
+    state: present
+    filename: 'nvidia-container-toolkit'
+    update_cache: true
+
+- name: Install nvidia-container-toolkit
+  become: true
+  ansible.builtin.apt:
+    name: nvidia-container-toolkit
+    state: present
+    update_cache: true
+
+# NVIDIA fabric manager should not be installed (at least in test because the GPUs are using PCI slots and not an NVLink board)
+# - name: Install nvidia-fabricmanager
+#   become: true
+#   ansible.builtin.apt:
+#     name: nvidia-fabricmanager-525
+#     state: present
+#     update_cache: true
+
+# - name: Enable nvidia-fabricmanager
+#   ansible.builtin.systemd:
+#     name: nvidia-fabricmanager
+#     state: started
+#     enabled: true
+
+- name: Disable nvidia-powerd
+  ansible.builtin.systemd:
+    name: nvidia-powerd
+    state: stopped
+    enabled: false

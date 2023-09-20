@@ -1,0 +1,32 @@
+---
+- name: check if pci realloc is configured in the boot command
+  lineinfile:
+    backup: true
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT=".*pci=realloc=off'
+    state: absent
+  check_mode: true
+  register: grub_cmdline_check
+  changed_when: false
+
+# We are not using handlers here because we want to control the order of execution and when to reboot the system.
+- name: insert pci=realloc=off if missing
+  lineinfile:
+    backrefs: true
+    path: /etc/default/grub
+    regexp: "^(GRUB_CMDLINE_LINUX_DEFAULT=\".*)\"$"
+    line: '\1 pci=realloc=off"'
+  when: grub_cmdline_check.found == 0
+  register: grub_cmdline_insert
+
+- name: Update grub
+  ansible.builtin.command: grub2-mkconfig -o /boot/grub2/grub.cfg
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  when: grub_cmdline_insert.changed
+
+- name: Reboot the system
+  ansible.builtin.reboot:
+  when: grub_cmdline_insert.changed
+

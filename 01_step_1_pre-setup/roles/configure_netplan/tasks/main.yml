@@ -1,0 +1,49 @@
+---
+- name: Install jq
+  ansible.builtin.package:
+    name: jq
+    state: present
+
+- name: Get the names of the interfaces to be used for the bond
+  ansible.builtin.shell: |
+    ip -j a | jq -r '.[]|select(.ifname|test("^(ens|eth|enp).*"))|if (.altnames==null) then .ifname else .altnames[0] end'
+  register: interface_names
+  changed_when: false
+
+
+- name: Create the bond only if we have two card
+  when: interface_names.stdout_lines | length == 2
+  block:
+    - name: Get the default mac address
+      ansible.builtin.set_fact:
+        default_mac: "{{ ansible_facts['default_ipv4']['macaddress'] }}"
+
+    - name: Generate the netplan config
+      ansible.builtin.template:
+        src: ../templates/01-netcfg.yaml.j2
+        dest: /etc/netplan/01-netcfg.yaml
+        owner: root
+        group: root
+        mode: 0644
+      register: netplan_config
+
+    - name: Make a backup copy of the old configuration file
+      ansible.builtin.copy:
+        src: /etc/netplan/00-installer-config.yaml
+        dest: /etc/netplan/00-installer-config.yaml.bak
+        remote_src: true
+      when: netplan_config.changed
+
+    - name: Remove the old configuration
+      ansible.builtin.file:
+        path: /etc/netplan/00-installer-config.yaml
+        state: absent
+      when: netplan_config.changed
+
+    - name: Apply the new configuration if it has changed
+      ansible.builtin.shell: netplan apply
+      when: netplan_config.changed
+
+    - name: Reboot the server to clean up the old configuration
+      ansible.builtin.reboot:
+      when: netplan_config.changed

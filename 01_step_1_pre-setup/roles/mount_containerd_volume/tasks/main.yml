@@ -1,0 +1,114 @@
+- name: Update blacklist.local.conf
+  ansible.builtin.lineinfile:
+    path: /etc/modprobe.d/blacklist.local.conf
+    state: absent
+    regexp: '^{{ item }}'
+  with_items:
+    - 'blacklist nvme'
+    - 'blacklist nvme_core'
+
+- name: Add the nvme module
+  community.general.modprobe:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - 'nvme'
+    - 'nvme_core'
+
+# we need to collect the facts again if the module was loaded
+- setup:
+
+# The partitions are not named the same way if it is a NVMe disk or a SSD
+# The NVMe disk is named /dev/nvme0n1p1
+# The SSD disk is named /dev/sdx1
+- name: Set the fact for the partition prefix with NVMe disks
+  set_fact:
+    partition_prefix: "p"
+  when: containerd_dedicated_disk.startswith('/dev/nvme')
+
+- name: Set the fact for the partition prefix with SSD disks
+  set_fact:
+    partition_prefix: ""
+  when: containerd_dedicated_disk.startswith('/dev/sd')
+
+- name: Check if the partition is already mounted
+  community.general.parted:
+    device: '{{ containerd_dedicated_disk }}'
+    state: info
+  register: parted_result
+  changed_when: false
+  failed_when: false
+
+- name: Set the fact that device exists
+  set_fact:
+    device_exists: "{{ ansible_facts.devices[containerd_dedicated_disk.split('/')[-1]] | default(false) }}"
+
+- name: Only if the device exists
+  when: device_exists
+  block:
+    - name: Only if the disk should get wiped
+      when: wipe_containerd_dedicated_disk | bool
+      block:
+        - name: Deactivate the ceph LV
+          ansible.builtin.shell: |
+            lvchange -an /dev/ceph-*
+          ignore_errors: true
+          failed_when: false
+
+        - name: Remove the PV
+          ansible.builtin.shell:
+            cmd: "pvremove --force --force --yes {{ containerd_dedicated_disk }}p{{ item }}"
+          with_sequence: start=1 end=4
+          ignore_errors: true
+          failed_when: false
+
+        - name: Check if the partition is already mounted
+          community.general.parted:
+            device: '{{ containerd_dedicated_disk }}'
+            state: info
+          register: parted_result
+          changed_when: false
+          failed_when: false
+
+        - name: Unmount the partition if it is already mounted
+          ansible.builtin.mount:
+            path: '/var/lib/containerd'
+            state: unmounted
+          when: parted_result.partitions is defined and parted_result.partitions | length > 0
+
+        - name: Delete all the partitions on the disk
+          community.general.parted:
+            device: '{{ containerd_dedicated_disk }}'
+            number: '{{ item.num }}'
+            state: absent
+          with_items: '{{ parted_result.partitions }}'
+
+        - name: Create the partition
+          community.general.parted:
+            device: '{{ containerd_dedicated_disk }}'
+            label: gpt
+            number: 1
+            flags: [ lvm ]
+            state: present
+            part_start: 0%
+            part_end: 100%
+            unit: '%'
+
+        - name: Make sure that the required helper program is installed
+          ansible.builtin.package:
+            name: xfsprogs
+            state: present
+
+        - name: Format the newly created partition as xfs
+          ansible.builtin.shell:
+            cmd: "mkfs.xfs -f {{ containerd_dedicated_disk }}{{ partition_prefix }}1"
+          ignore_errors: true
+          failed_when: false
+
+    - name: Mount the partition
+      ansible.builtin.mount:
+        path: '/var/lib/containerd'
+        src: '{{ containerd_dedicated_disk }}{{ partition_prefix }}1'
+        fstype: xfs
+        opts: defaults
+        state: mounted

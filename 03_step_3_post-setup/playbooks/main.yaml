@@ -1,0 +1,126 @@
+---
+- name: Perform the post-installation tasks
+  hosts: all
+  collections:
+    - kubernetes.core
+  tasks:
+    - name: Deploy the NVIDIA GPU-operator
+      tags: gpu-operator
+      ansible.builtin.include_role:
+        name: ic_it.nvidia_gpu_operator
+        apply:
+          tags:
+            - gpu-operator
+
+    - name: Deploy the nginx ingress controller
+      when: master_node
+      run_once: true
+      tags: nginx-ingress-controller
+      ansible.builtin.include_role:
+        name: ic_it.nginx_ingress_controller
+        apply:
+          tags:
+            - nginx-ingress-controller
+
+    - name: Create the runai namespace
+      tags: runai-objects
+      when: master_node
+      run_once: true
+      delegate_to: localhost
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: runai
+
+    - name: Create the TLS certificate secret
+      tags: runai-objects
+      when: master_node
+      run_once: true
+      delegate_to: localhost
+      kubernetes.core.k8s:
+        state: present
+        namespace: runai
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: runai-cluster-domain-tls-secret
+            namespace: runai
+          data:
+            tls.crt: "{{ lookup('file', '../files/crt.pem') | b64encode }}"
+            tls.key: "{{ lookup('file', '../files/key.pem') | b64encode }}"
+          type: kubernetes.io/tls
+
+    - name: Install the prometheus Helm chart
+      tags: prometheus
+      when: master_node
+      run_once: true
+      kubernetes.core.helm:
+        name: prometheus-community
+        chart_repo_url: https://prometheus-community.github.io/helm-charts
+        chart_ref: kube-prometheus-stack
+        state: present
+        wait: true
+        update_repo_cache: true
+        release_namespace: monitoring
+        create_namespace: true
+        values:
+          grafana.enabled: false
+
+    - name: Only on non master nodes
+      tags: tag-nodes
+      when: not (master_node | bool)
+      block:
+      - name: Apply the gpu-workers labels to the nodes
+        kubernetes.core.k8s:
+          state: patched
+          kind: Node
+          name: "{{ inventory_hostname }}"
+          definition:
+            apiVersion: v1
+            kind: Node
+            metadata:
+              labels:
+                node-role.kubernetes.io/runai-gpu-worker: "true"
+                run.ai/type: "{{ tag }}"
+            name: "{{ inventory_hostname }}"
+        when: gpu
+        tags: tag-nodes
+        delegate_to: localhost
+
+      - name: Apply the cpu-workers labels to the nodes
+        kubernetes.core.k8s:
+          state: patched
+          kind: Node
+          name: "{{ inventory_hostname }}"
+          definition:
+            apiVersion: v1
+            kind: Node
+            metadata:
+              labels:
+                node-role.kubernetes.io/runai-cpu-worker: "true"
+                run.ai/type: "{{ tag }}"
+            name: "{{ inventory_hostname }}"
+        when: tag == 'S8'
+        delegate_to: localhost
+
+    - name: Install the node_exporter role
+      ansible.builtin.include_role:
+        name: geerlingguy.node_exporter
+        apply:
+          tags:
+            - node-exporter
+      vars:
+        node_exporter_port: 9000
+      tags: node-exporter
+
+    - name: Install the process exporter role
+      ansible.builtin.include_role:
+        name: process_exporter
+        apply:
+          tags:
+            - process-exporter
+      tags: process-exporter
