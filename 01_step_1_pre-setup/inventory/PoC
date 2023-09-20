@@ -1,2 +1,0 @@
-iccluster217.iccluster.epfl.ch gpu=nvidia-a100 cpu_worker=false gpu_worker=true type=G10 containerd_dedicated_disk=/dev/nvme0n1 wipe_containerd_dedicated_disk=true
-iccluster152.iccluster.epfl.ch gpu=None cpu_worker=true gpu_worker=false type=S8 containerd_dedicated_disk=/dev/sdb wipe_containerd_dedicated_disk=false

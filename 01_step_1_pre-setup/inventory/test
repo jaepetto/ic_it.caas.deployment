@@ -1,6 +1,6 @@
-icadmin010.iccluster.epfl.ch gpu=None cpu_worker=false gpu_worker=false type=None
-iccluster027.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3
-iccluster031.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3
-iccluster041.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3
+icadmin010.iccluster.epfl.ch gpu=None cpu_worker=false gpu_worker=false type=None containerd_dedicated_disk=false wipe_containerd_dedicated_disk=false
+iccluster027.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3 containerd_dedicated_disk=false wipe_containerd_dedicated_disk=false
+iccluster031.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3 containerd_dedicated_disk=false wipe_containerd_dedicated_disk=false
+iccluster041.iccluster.epfl.ch gpu=NVIDIA-GeForce-GTX-TITAN-X cpu_worker=false gpu_worker=true type=G3 containerd_dedicated_disk=false wipe_containerd_dedicated_disk=false
 
 
