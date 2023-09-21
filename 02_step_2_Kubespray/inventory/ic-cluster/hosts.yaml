@@ -1,0 +1,413 @@
+all:
+  hosts:
+    icadmin011.iccluster.epfl.ch:
+      ansible_host: 10.90.53.13
+      ip: 10.90.53.13
+      access_ip: 10.90.53.13
+    icadmin012.iccluster.epfl.ch:
+      ansible_host: 10.90.53.12
+      ip: 10.90.53.12
+      access_ip: 10.90.53.12
+    icadmin014.iccluster.epfl.ch:
+      ansible_host: 10.90.53.11
+      ip: 10.90.53.11
+      access_ip: 10.90.53.11
+    iccluster150.iccluster.epfl.ch:
+      ansible_host: 10.90.47.2
+      ip: 10.90.47.2
+      access_ip: 10.90.47.2
+    iccluster151.iccluster.epfl.ch:
+      ansible_host: 10.90.47.3
+      ip: 10.90.47.3
+      access_ip: 10.90.47.3
+    iccluster152.iccluster.epfl.ch:
+      ansible_host: 10.90.47.4
+      ip: 10.90.47.4
+      access_ip: 10.90.47.4
+    iccluster153.iccluster.epfl.ch:
+      ansible_host: 10.90.47.5
+      ip: 10.90.47.5
+      access_ip: 10.90.47.5
+    iccluster154.iccluster.epfl.ch:
+      ansible_host: 10.90.47.6
+      ip: 10.90.47.6
+      access_ip: 10.90.47.6
+    iccluster155.iccluster.epfl.ch:
+      ansible_host: 10.90.47.7
+      ip: 10.90.47.7
+      access_ip: 10.90.47.7
+    iccluster156.iccluster.epfl.ch:
+      ansible_host: 10.90.47.8
+      ip: 10.90.47.8
+      access_ip: 10.90.47.8
+    iccluster157.iccluster.epfl.ch:
+      ansible_host: 10.90.47.9
+      ip: 10.90.47.9
+      access_ip: 10.90.47.9
+    iccluster158.iccluster.epfl.ch:
+      ansible_host: 10.90.47.10
+      ip: 10.90.47.10
+      access_ip: 10.90.47.10
+    iccluster159.iccluster.epfl.ch:
+      ansible_host: 10.90.47.11
+      ip: 10.90.47.11
+      access_ip: 10.90.47.11
+    iccluster160.iccluster.epfl.ch:
+      ansible_host: 10.90.47.12
+      ip: 10.90.47.12
+      access_ip: 10.90.47.12
+    # iccluster161.iccluster.epfl.ch:
+    #   ansible_host: 10.90.47.13
+    #   ip: 10.90.47.13
+    #   access_ip: 10.90.47.13
+    iccluster162.iccluster.epfl.ch:
+      ansible_host: 10.90.47.14
+      ip: 10.90.47.14
+      access_ip: 10.90.47.14
+    iccluster163.iccluster.epfl.ch:
+      ansible_host: 10.90.47.15
+      ip: 10.90.47.15
+      access_ip: 10.90.47.15
+    iccluster164.iccluster.epfl.ch:
+      ansible_host: 10.90.47.16
+      ip: 10.90.47.16
+      access_ip: 10.90.47.16
+    iccluster165.iccluster.epfl.ch:
+      ansible_host: 10.90.47.17
+      ip: 10.90.47.17
+      access_ip: 10.90.47.17
+    iccluster166.iccluster.epfl.ch:
+      ansible_host: 10.90.47.18
+      ip: 10.90.47.18
+      access_ip: 10.90.47.18
+    iccluster167.iccluster.epfl.ch:
+      ansible_host: 10.90.47.19
+      ip: 10.90.47.19
+      access_ip: 10.90.47.19
+    iccluster168.iccluster.epfl.ch:
+      ansible_host: 10.90.47.20
+      ip: 10.90.47.20
+      access_ip: 10.90.47.20
+    iccluster169.iccluster.epfl.ch:
+      ansible_host: 10.90.47.21
+      ip: 10.90.47.21
+      access_ip: 10.90.47.21
+    iccluster170.iccluster.epfl.ch:
+      ansible_host: 10.90.47.22
+      ip: 10.90.47.22
+      access_ip: 10.90.47.22
+    iccluster171.iccluster.epfl.ch:
+      ansible_host: 10.90.47.23
+      ip: 10.90.47.23
+      access_ip: 10.90.47.23
+    iccluster172.iccluster.epfl.ch:
+      ansible_host: 10.90.47.24
+      ip: 10.90.47.24
+      access_ip: 10.90.47.24
+    iccluster173.iccluster.epfl.ch:
+      ansible_host: 10.90.47.25
+      ip: 10.90.47.25
+      access_ip: 10.90.47.25
+    iccluster174.iccluster.epfl.ch:
+      ansible_host: 10.90.47.26
+      ip: 10.90.47.26
+      access_ip: 10.90.47.26
+    iccluster175.iccluster.epfl.ch:
+      ansible_host: 10.90.47.27
+      ip: 10.90.47.27
+      access_ip: 10.90.47.27
+    iccluster176.iccluster.epfl.ch:
+      ansible_host: 10.90.47.28
+      ip: 10.90.47.28
+      access_ip: 10.90.47.28
+    iccluster177.iccluster.epfl.ch:
+      ansible_host: 10.90.47.29
+      ip: 10.90.47.29
+      access_ip: 10.90.47.29
+    iccluster178.iccluster.epfl.ch:
+      ansible_host: 10.90.47.30
+      ip: 10.90.47.30
+      access_ip: 10.90.47.30
+    iccluster179.iccluster.epfl.ch:
+      ansible_host: 10.90.47.31
+      ip: 10.90.47.31
+      access_ip: 10.90.47.31
+    # iccluster180.iccluster.epfl.ch:
+    #   ansible_host: 10.90.47.32
+    #   ip: 10.90.47.32
+    #   access_ip: 10.90.47.32
+    iccluster181.iccluster.epfl.ch:
+      ansible_host: 10.90.47.33
+      ip: 10.90.47.33
+      access_ip: 10.90.47.33
+    iccluster182.iccluster.epfl.ch:
+      ansible_host: 10.90.47.34
+      ip: 10.90.47.34
+      access_ip: 10.90.47.34
+    iccluster183.iccluster.epfl.ch:
+      ansible_host: 10.90.47.35
+      ip: 10.90.47.35
+      access_ip: 10.90.47.35
+    iccluster184.iccluster.epfl.ch:
+      ansible_host: 10.90.50.2
+      ip: 10.90.50.2
+      access_ip: 10.90.50.2
+    iccluster185.iccluster.epfl.ch:
+      ansible_host: 10.90.50.3
+      ip: 10.90.50.3
+      access_ip: 10.90.50.3
+    iccluster186.iccluster.epfl.ch:
+      ansible_host: 10.90.50.4
+      ip: 10.90.50.4
+      access_ip: 10.90.50.4
+    iccluster187.iccluster.epfl.ch:
+      ansible_host: 10.90.50.5
+      ip: 10.90.50.5
+      access_ip: 10.90.50.5
+    iccluster188.iccluster.epfl.ch:
+      ansible_host: 10.90.50.6
+      ip: 10.90.50.6
+      access_ip: 10.90.50.6
+    iccluster189.iccluster.epfl.ch:
+      ansible_host: 10.90.50.7
+      ip: 10.90.50.7
+      access_ip: 10.90.50.7
+    iccluster190.iccluster.epfl.ch:
+      ansible_host: 10.90.50.8
+      ip: 10.90.50.8
+      access_ip: 10.90.50.8
+    iccluster191.iccluster.epfl.ch:
+      ansible_host: 10.90.50.9
+      ip: 10.90.50.9
+      access_ip: 10.90.50.9
+    iccluster192.iccluster.epfl.ch:
+      ansible_host: 10.90.50.10
+      ip: 10.90.50.10
+      access_ip: 10.90.50.10
+    iccluster193.iccluster.epfl.ch:
+      ansible_host: 10.90.50.11
+      ip: 10.90.50.11
+      access_ip: 10.90.50.11
+    iccluster194.iccluster.epfl.ch:
+      ansible_host: 10.90.50.12
+      ip: 10.90.50.12
+      access_ip: 10.90.50.12
+    iccluster195.iccluster.epfl.ch:
+      ansible_host: 10.90.50.13
+      ip: 10.90.50.13
+      access_ip: 10.90.50.13
+    iccluster196.iccluster.epfl.ch:
+      ansible_host: 10.90.50.14
+      ip: 10.90.50.14
+      access_ip: 10.90.50.14
+    iccluster197.iccluster.epfl.ch:
+      ansible_host: 10.90.50.15
+      ip: 10.90.50.15
+      access_ip: 10.90.50.15
+    iccluster198.iccluster.epfl.ch:
+      ansible_host: 10.90.50.16
+      ip: 10.90.50.16
+      access_ip: 10.90.50.16
+    iccluster199.iccluster.epfl.ch:
+      ansible_host: 10.90.50.17
+      ip: 10.90.50.17
+      access_ip: 10.90.50.17
+    iccluster200.iccluster.epfl.ch:
+      ansible_host: 10.90.50.18
+      ip: 10.90.50.18
+      access_ip: 10.90.50.18
+    iccluster201.iccluster.epfl.ch:
+      ansible_host: 10.90.50.19
+      ip: 10.90.50.19
+      access_ip: 10.90.50.19
+    iccluster202.iccluster.epfl.ch:
+      ansible_host: 10.90.49.2
+      ip: 10.90.49.2
+      access_ip: 10.90.49.2
+    # iccluster203.iccluster.epfl.ch:
+    #   ansible_host: 10.90.49.3
+    #   ip: 10.90.49.3
+    #   access_ip: 10.90.49.3
+    iccluster204.iccluster.epfl.ch:
+      ansible_host: 10.90.49.4
+      ip: 10.90.49.4
+      access_ip: 10.90.49.4
+    iccluster205.iccluster.epfl.ch:
+      ansible_host: 10.90.49.5
+      ip: 10.90.49.5
+      access_ip: 10.90.49.5
+    iccluster206.iccluster.epfl.ch:
+      ansible_host: 10.90.49.6
+      ip: 10.90.49.6
+      access_ip: 10.90.49.6
+    iccluster207.iccluster.epfl.ch:
+      ansible_host: 10.90.49.7
+      ip: 10.90.49.7
+      access_ip: 10.90.49.7
+    iccluster208.iccluster.epfl.ch:
+      ansible_host: 10.90.49.8
+      ip: 10.90.49.8
+      access_ip: 10.90.49.8
+    iccluster209.iccluster.epfl.ch:
+      ansible_host: 10.90.52.2
+      ip: 10.90.52.2
+      access_ip: 10.90.52.2
+    iccluster210.iccluster.epfl.ch:
+      ansible_host: 10.90.52.3
+      ip: 10.90.52.3
+      access_ip: 10.90.52.3
+    iccluster211.iccluster.epfl.ch:
+      ansible_host: 10.90.52.4
+      ip: 10.90.52.4
+      access_ip: 10.90.52.4
+    iccluster212.iccluster.epfl.ch:
+      ansible_host: 10.90.52.5
+      ip: 10.90.52.5
+      access_ip: 10.90.52.5
+    iccluster213.iccluster.epfl.ch:
+      ansible_host: 10.90.52.6
+      ip: 10.90.52.6
+      access_ip: 10.90.52.6
+    iccluster214.iccluster.epfl.ch:
+      ansible_host: 10.90.52.7
+      ip: 10.90.52.7
+      access_ip: 10.90.52.7
+    iccluster215.iccluster.epfl.ch:
+      ansible_host: 10.90.52.8
+      ip: 10.90.52.8
+      access_ip: 10.90.52.8
+    iccluster216.iccluster.epfl.ch:
+      ansible_host: 10.90.52.9
+      ip: 10.90.52.9
+      access_ip: 10.90.52.9
+    iccluster217.iccluster.epfl.ch:
+      ansible_host: 10.90.52.10
+      ip: 10.90.52.10
+      access_ip: 10.90.52.10
+    iccluster218.iccluster.epfl.ch:
+      ansible_host: 10.90.53.2
+      ip: 10.90.53.2
+      access_ip: 10.90.53.2
+    iccluster219.iccluster.epfl.ch:
+      ansible_host: 10.90.53.3
+      ip: 10.90.53.3
+      access_ip: 10.90.53.3
+    iccluster220.iccluster.epfl.ch:
+      ansible_host: 10.90.53.4
+      ip: 10.90.53.4
+      access_ip: 10.90.53.4
+    iccluster221.iccluster.epfl.ch:
+      ansible_host: 10.90.53.5
+      ip: 10.90.53.5
+      access_ip: 10.90.53.5
+    iccluster222.iccluster.epfl.ch:
+      ansible_host: 10.90.53.6
+      ip: 10.90.53.6
+      access_ip: 10.90.53.6
+    iccluster223.iccluster.epfl.ch:
+      ansible_host: 10.90.53.7
+      ip: 10.90.53.7
+      access_ip: 10.90.53.7
+    iccluster224.iccluster.epfl.ch:
+      ansible_host: 10.90.53.8
+      ip: 10.90.53.8
+      access_ip: 10.90.53.8
+    iccluster225.iccluster.epfl.ch:
+      ansible_host: 10.90.53.9
+      ip: 10.90.53.9
+      access_ip: 10.90.53.9
+  children:
+    kube_control_plane:
+      hosts:
+        icadmin011.iccluster.epfl.ch:
+        icadmin012.iccluster.epfl.ch:
+        icadmin014.iccluster.epfl.ch:
+    kube_node:
+      hosts:
+        iccluster150.iccluster.epfl.ch:
+        iccluster151.iccluster.epfl.ch:
+        iccluster152.iccluster.epfl.ch:
+        iccluster153.iccluster.epfl.ch:
+        iccluster154.iccluster.epfl.ch:
+        iccluster155.iccluster.epfl.ch:
+        iccluster156.iccluster.epfl.ch:
+        iccluster157.iccluster.epfl.ch:
+        iccluster158.iccluster.epfl.ch:
+        iccluster159.iccluster.epfl.ch:
+        iccluster160.iccluster.epfl.ch:
+        # iccluster161.iccluster.epfl.ch:
+        iccluster162.iccluster.epfl.ch:
+        iccluster163.iccluster.epfl.ch:
+        iccluster164.iccluster.epfl.ch:
+        iccluster165.iccluster.epfl.ch:
+        iccluster166.iccluster.epfl.ch:
+        iccluster167.iccluster.epfl.ch:
+        iccluster168.iccluster.epfl.ch:
+        iccluster169.iccluster.epfl.ch:
+        iccluster170.iccluster.epfl.ch:
+        iccluster171.iccluster.epfl.ch:
+        iccluster172.iccluster.epfl.ch:
+        iccluster173.iccluster.epfl.ch:
+        iccluster174.iccluster.epfl.ch:
+        iccluster175.iccluster.epfl.ch:
+        iccluster176.iccluster.epfl.ch:
+        iccluster177.iccluster.epfl.ch:
+        iccluster178.iccluster.epfl.ch:
+        iccluster179.iccluster.epfl.ch:
+        # iccluster180.iccluster.epfl.ch:
+        iccluster181.iccluster.epfl.ch:
+        iccluster182.iccluster.epfl.ch:
+        iccluster183.iccluster.epfl.ch:
+        iccluster184.iccluster.epfl.ch:
+        iccluster185.iccluster.epfl.ch:
+        iccluster186.iccluster.epfl.ch:
+        iccluster187.iccluster.epfl.ch:
+        iccluster188.iccluster.epfl.ch:
+        iccluster189.iccluster.epfl.ch:
+        iccluster190.iccluster.epfl.ch:
+        iccluster191.iccluster.epfl.ch:
+        iccluster192.iccluster.epfl.ch:
+        iccluster193.iccluster.epfl.ch:
+        iccluster194.iccluster.epfl.ch:
+        iccluster195.iccluster.epfl.ch:
+        iccluster196.iccluster.epfl.ch:
+        iccluster197.iccluster.epfl.ch:
+        iccluster198.iccluster.epfl.ch:
+        iccluster199.iccluster.epfl.ch:
+        iccluster200.iccluster.epfl.ch:
+        iccluster201.iccluster.epfl.ch:
+        iccluster202.iccluster.epfl.ch:
+        # iccluster203.iccluster.epfl.ch:
+        iccluster204.iccluster.epfl.ch:
+        iccluster205.iccluster.epfl.ch:
+        iccluster206.iccluster.epfl.ch:
+        iccluster207.iccluster.epfl.ch:
+        iccluster208.iccluster.epfl.ch:
+        iccluster209.iccluster.epfl.ch:
+        iccluster210.iccluster.epfl.ch:
+        iccluster211.iccluster.epfl.ch:
+        iccluster212.iccluster.epfl.ch:
+        iccluster213.iccluster.epfl.ch:
+        iccluster214.iccluster.epfl.ch:
+        iccluster215.iccluster.epfl.ch:
+        iccluster216.iccluster.epfl.ch:
+        iccluster217.iccluster.epfl.ch:
+        iccluster218.iccluster.epfl.ch:
+        iccluster219.iccluster.epfl.ch:
+        iccluster220.iccluster.epfl.ch:
+        iccluster221.iccluster.epfl.ch:
+        iccluster222.iccluster.epfl.ch:
+        iccluster223.iccluster.epfl.ch:
+        iccluster224.iccluster.epfl.ch:
+        iccluster225.iccluster.epfl.ch:
+    etcd:
+      hosts:
+        icadmin011.iccluster.epfl.ch:
+        icadmin012.iccluster.epfl.ch:
+        icadmin014.iccluster.epfl.ch:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}

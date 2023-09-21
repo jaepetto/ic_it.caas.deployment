@@ -1,0 +1,39 @@
+all:
+  hosts:
+    icadmin010.iccluster.epfl.ch:
+      ansible_host: 10.90.36.20
+      ip: 10.90.36.20
+      access_ip: 10.90.36.20
+    iccluster027.iccluster.epfl.ch:
+      ansible_host: 10.90.38.3
+      ip: 10.90.38.3
+      access_ip: 10.90.38.3
+    iccluster031.iccluster.epfl.ch:
+      ansible_host: 10.90.38.7
+      ip: 10.90.38.7
+      access_ip: 10.90.38.7
+    iccluster041.iccluster.epfl.ch:
+      ansible_host: 10.90.38.17
+      ip: 10.90.38.17
+      access_ip: 10.90.38.17
+  children:
+    kube_control_plane:
+      hosts:
+        icadmin010.iccluster.epfl.ch:
+    kube_node:
+      hosts:
+        icadmin010.iccluster.epfl.ch:
+        iccluster027.iccluster.epfl.ch:
+        iccluster031.iccluster.epfl.ch:
+        iccluster041.iccluster.epfl.ch:
+    etcd:
+      hosts:
+        icadmin010.iccluster.epfl.ch:
+        iccluster027.iccluster.epfl.ch:
+        iccluster031.iccluster.epfl.ch:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
