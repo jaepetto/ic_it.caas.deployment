@@ -67,8 +67,13 @@
         update_repo_cache: true
         release_namespace: monitoring
         create_namespace: true
-        values:
-          grafana.enabled: false
+        set_values:
+          - value: alermanager.alertmanagerSpec.priorityClassName=system-cluster-critical
+          - value: grafana.enabled=true
+          - value: prometheus-node-exporter.priorityClassName=system-cluster-critical
+          - value: prometheus.prometheusSpec.priorityClassName=system-cluster-critical
+          - value: prometheusOperator.admissionWebhooks.patch.priorityClassName=system-cluster-critical
+          - value: prometheusOperator.priorityClassName=system-cluster-critical
 
     - name: Only on non master nodes
       tags: tag-nodes
