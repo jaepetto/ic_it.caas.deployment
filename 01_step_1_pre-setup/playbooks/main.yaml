@@ -45,6 +45,9 @@
     - name: Configure the IC-IT SSH keys
       ansible.builtin.include_role:
         name: deploy_ic_it_ssh_keys
+        apply:
+          tags: ic_it_ssh_keys
+      tags: ic_it_ssh_keys
 
     - name: Configure netplan
       ansible.builtin.include_role:
